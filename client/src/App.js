@@ -10,6 +10,7 @@ import Register from './components/Auth/Register'
 import Main from './components/Layout/Main'
 import NotFound from './components/NotFound'
 import Profile from './components/Profile/Profile'
+import IPFS from './components/IPFS/IPFS'
 
 import setAuthHeader from './utils/setAuthHeader'
 import { logoutUser, getCurrentUser } from './actions/authActions'
@@ -37,6 +38,7 @@ class App extends Component {
               <Switch>
                 <Route exact path="/" component={Home} />
                 <Route path="/login" component={Login} />
+                <Route path="/ipfs" component={IPFS} />
                 <Route path="/register" component={Register} />
                 <Route path="/profile/:userId" component={Profile} />
                 <Route component={NotFound} />

@@ -3,10 +3,12 @@ import errorReducer from './errorReducer'
 import authReducer from './authReducer'
 import postReducer from './postReducer'
 import profileReducer from './profileReducer'
+import ipfsUploadReducer from './ipfsUploadReducer'
 
 export default combineReducers({
     errors: errorReducer,
     auth: authReducer,
     post: postReducer,
-    profile: profileReducer
+    profile: profileReducer,
+    ipfs: ipfsUploadReducer
 })

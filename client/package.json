@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "dotenv": "^7.0.0",
     "jwt-decode": "^2.2.0",
+    "material-ui-dropzone": "^2.3.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-made-with-love": "^1.0.1",

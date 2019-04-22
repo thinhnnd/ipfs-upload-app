@@ -1,25 +1,24 @@
 import axios from 'axios'
 import { GET_ERRORS, SET_CURRENT_USER } from '../constants'
 import setAuthHeader from '../utils/setAuthHeader'
+import {host} from '../config/host'
 
 export const loginUser = (userData) => dispatch => {
-	axios.post('http://localhost:5000/api/users/login', userData)
+	axios.post(`http://${host}/api/users/login`, userData)
 		.then(res => {
 			const { token } = res.data 
 			localStorage.setItem('jwtToken', token)
 			setAuthHeader(token)
 			dispatch(getCurrentUser())
 		})
-		.catch(err => {
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.res.data
-			})
-		})
+		.catch(err => dispatch({
+			type: GET_ERRORS,
+			payload: err.response.data
+		}))
 }
 
 export const registerUser = (userData, history) => dispatch => {
-	axios.post('http://localhost:5000/api/users/register', userData)
+	axios.post(`http://${host}/api/users/register`, userData)
 		.then(res => history.push('/login'))
 		.catch(err => dispatch({
 			type: GET_ERRORS,
@@ -28,8 +27,14 @@ export const registerUser = (userData, history) => dispatch => {
 }
 
 export const getCurrentUser = () => dispatch => {
-	axios.get('http://localhost:5000/api/users')
+	axios.get(`http://${host}/api/users`)
 		.then(res => dispatch(setCurrentUser(res.data)))
+		.catch(err => {
+			dispatch({
+				type: GET_ERRORS,
+				payload: err.data
+			})
+		})
 }
 
 export const setCurrentUser = (data) => {

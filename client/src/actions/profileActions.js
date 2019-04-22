@@ -7,10 +7,12 @@ import {
     FOLLOW, 
     UNFOLLOW
 } from '../constants'
+import {host} from '../config/host'
+
 
 export const getUserProfile = (userId) => dispatch => {
     dispatch(loadProfile())
-    axios.get(`http://localhost:5000/api/users/${userId}`)
+    axios.get(`http://${host}/api/users/${userId}`)
         .then( res => dispatch({
             type: GET_PROFILE,
             payload: res.data
@@ -20,7 +22,7 @@ export const getUserProfile = (userId) => dispatch => {
 
 export const getPostsByUserId = (userId) => dispatch => {
     dispatch(loadPosts());
-    axios.get(`http://localhost:5000/api/posts/${userId}`)
+    axios.get(`http://${host}/api/posts/${userId}`)
         .then(res => dispatch({
             type: GET_POSTS,
             payload: res.data
@@ -29,7 +31,7 @@ export const getPostsByUserId = (userId) => dispatch => {
 }
 
 export const followUser = (userId) => dispatch => {
-    axios.post('http://localhost:5000/api/users/follow', {userId})
+    axios.post(`http://${host}/api/users/follow`, {userId})
         .then(res => dispatch({
             type: FOLLOW,
             payload: res.data
@@ -38,7 +40,7 @@ export const followUser = (userId) => dispatch => {
 }
 
 export const unfollowUser = (userId) => dispatch => {
-    axios.post('http://localhost:5000/api/users/unfollow', {userId})
+    axios.post(`http://${host}/api/users/unfollow`, {userId})
         .then(res => dispatch({
             type: UNFOLLOW,
             payload: res.data
