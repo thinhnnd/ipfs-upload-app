@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
 import {Link} from 'react-router-dom'
-import {host} from '../../config/host'
 
 
 import { connect } from 'react-redux'
@@ -47,9 +46,9 @@ class ListHashes extends Component {
     render() {
         const { classes, hashList } = this.props
         console.log('hashList', hashList)
-        console.log(host)
-        const hashItems = hashList && hashList.map( el => <TableRow hover key={el._id} component='a' target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
-                <TableCell> STT </TableCell>
+       
+        const hashItems = hashList && hashList.map( (el, i) => <TableRow hover key={el._id} component='a' target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
+                <TableCell> {i} </TableCell>
                 <TableCell> {el.type} </TableCell>
                 <TableCell> {el.ipfsHash}  </TableCell>
                 <TableCell> {(new Date(el.createAt)).toLocaleString()} </TableCell>
