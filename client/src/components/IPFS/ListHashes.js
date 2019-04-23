@@ -21,6 +21,11 @@ const styles = theme => ({
     },
     table: {
         minWidth: 700
+    },
+    trHover: {
+        '&:hover': {
+            cursor: 'pointer'
+        }
     }
 })
 
@@ -47,7 +52,7 @@ class ListHashes extends Component {
         const { classes, hashList } = this.props
         console.log('hashList', hashList)
        
-        const hashItems = hashList && hashList.map( (el, i) => <TableRow hover key={el._id} component='a' target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
+        const hashItems = hashList && hashList.map( (el, i) => <TableRow onClick={()=>this.handleClickLink(el.ipfsHash)} className={classes.trHover} hover key={el._id}  target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
                 <TableCell> {i} </TableCell>
                 <TableCell> {el.type} </TableCell>
                 <TableCell> {el.ipfsHash}  </TableCell>
@@ -62,7 +67,7 @@ class ListHashes extends Component {
                             <TableCell>STT</TableCell>
                             <TableCell align="right">Type</TableCell>
                             <TableCell align="right">Hash</TableCell>
-                            <TableCell align="right">Date Created (g)</TableCell>
+                            <TableCell align="right">Date Created</TableCell>
                             <TableCell align="right">Uploader</TableCell>
                         </TableRow>
                     </TableHead>

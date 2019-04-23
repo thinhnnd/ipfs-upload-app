@@ -1,13 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux' 
 
-import ListHashes from './ListHashes';
+import {addFile} from '../../actions/ipfsUploadActions'
 
-import Paper from '@material-ui/core/Paper'
-import IpfsAdd from './IpfsAdd';
-import Login from '../Auth/Login'
+import {DropzoneDialog} from 'material-ui-dropzone'
+import Button from '@material-ui/core/Button';
+import Paper  from '@material-ui/core/Paper';
 
-class IPFS extends Component {
+class IpfsAdd extends Component {
 
     constructor(props) {
         super(props);
@@ -66,26 +66,27 @@ class IPFS extends Component {
 
     render() {
         console.log('fileUpload',this.state);
-        const { isAuthenticated } = this.props;
 
         return (
             <div>
-            
-            { isAuthenticated ? <Paper>
-                                    <h3 >IPFS Page</h3>
-                                    <IpfsAdd />
-                                    <ListHashes />
-                                </Paper> 
-                                : <Login /> 
-            }
+                <Button variant="contained"  color='secondary' onClick={this.handleOpen.bind(this)}>
+                  Add File
+                </Button>
+                <DropzoneDialog
+                    open={this.state.open}
+                    onSave={this.handleSubmit}
+                    acceptedFiles={['image/*', 'video/*', 'application/*']}
+                    onChange={this.handleChange.bind(this)}
+                    showPreviews={true}
+                    filesLimit={1}
+                    maxFileSize={5000000}
+                    showAlerts={true}
+                    onClose={this.handleClose.bind(this)}
+                />
             </div>
-            
+
         )
     }
 }
 
-const mapStateToProps = (state) => ({
-    isAuthenticated: state.auth.isAuthenticated
-})
-
-export default connect(mapStateToProps)(IPFS)
+export default connect(null, {addFile})(IpfsAdd)
