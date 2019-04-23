@@ -8,13 +8,14 @@ const ipfs = require('./routes/ipfs')
 const cors = require('cors')
 const passport = require('passport')
 const fileUpload = require('express-fileupload')
-
+const config = require('../server/config/config');
 //setup environment
 dotenv.config()
 
 //mongodb connect
+const uri = config.uri ;
 
-mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URL||uri, {useNewUrlParser: true })
 
 const app = express()
 app.use(bodyParser.json())

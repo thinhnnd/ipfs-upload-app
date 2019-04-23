@@ -1,11 +1,11 @@
 const JwtStrategy = require('passport-jwt').Strategy
 const ExtractJwt = require('passport-jwt').ExtractJwt
 const User = require('../models/User')
-
+const config = require('../config/config');
 var opts = {}   
 
 opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken()
-opts.secretOrKey = process.env.SECRET
+opts.secretOrKey = process.env.SECRET || config.secret;
 
 
 module.exports = (passport) => {

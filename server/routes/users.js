@@ -3,25 +3,26 @@ const User = require('../models/User')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const passport = require('passport')
+const config = require('../config/config');
 
 const validateRegisterInput = require('../validation/register')
 const validateLoginInput = require('../validation/login')
 
 router.route('/register').post((req, res) => {
     const { isValid, errors } = validateRegisterInput(req.body)
-    
-    if(!isValid) {
+
+    if (!isValid) {
         return res.status(404).json(errors)
     }
 
-    User.findOne({ email: req.body.email } )
+    User.findOne({ email: req.body.email })
         .then(user => {
             if (user) {
                 errors.email = 'Email was used'
                 return res.status(404).json(errors)
             }
 
-            bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.genSalt(10, function (err, salt) {
                 bcrypt.hash(req.body.password, salt, function (err, hash) {
                     const newUser = new User({
                         email: req.body.email,
@@ -44,37 +45,38 @@ router.route('/register').post((req, res) => {
 router.route('/login').post((req, res) => {
     const { errors, isValid } = validateLoginInput(req.body)
 
-    if(!isValid) {
+    if (!isValid) {
         return res.status(404).json(errors)
     }
-    User.findOne({ email: req.body.email } )
-        .then( user => {
-            if(user) {
+    User.findOne({ email: req.body.email })
+        .then(user => {
+            if (user) {
                 bcrypt.compare(req.body.password, user.password)
-                .then(isMatch => {
-                    if(isMatch) {
-                        const token = jwt.sign({ id: user._id }, process.env.SECRET, { expiresIn: '1d'}, function(err, token) {
-                            return res.json({
-                                success: true,
-                                token: token
-                            })
-                        })
-                    }
-                    else {
-                        errors.password = 'Password is in correct'
-                        return res.status(404).json(errors)
-                    }
-                }) 
+                    .then(isMatch => {
+                        if (isMatch) {
+                            const token = jwt.sign({ id: user._id }, process.env.SECRET || config.secret, { expiresIn: '1d' });
+                            if (token)
+                                return res.json({
+                                    success: true,
+                                    token: token
+                                });
+                            else return res.json({msg:"Sign fail"});
+                        }
+                        else {
+                            errors.password = 'Password is in correct'
+                            return res.status(404).json(errors)
+                        }
+                    })
             } else {
                 errors.email = 'User not found'
                 return res.status(404).json(errors)
-            } 
+            }
         })
-        .catch(err=> console.log(err))
+        .catch(err => console.log(err))
 })
 
 router.route('/')
-    .get( passport.authenticate('jwt', { session: false }), (req, res) => {
+    .get(passport.authenticate('jwt', { session: false }), (req, res) => {
         res.json({
             _id: req.user._id,
             email: req.user.email,
@@ -85,11 +87,11 @@ router.route('/')
         })
     })
 
-    router.route('/:id')
-    .get( (req, res) => {
+router.route('/:id')
+    .get((req, res) => {
         User.findById(req.params.id)
             .then(user => {
-                if(user) {
+                if (user) {
                     return res.json({
                         _id: user._id,
                         email: user.email,
@@ -97,9 +99,9 @@ router.route('/')
                         followers: user.followers,
                         following: user.following
                     })
-                } 
+                }
                 else {
-                    return res.status(404).json({ msg: 'User not found'})
+                    return res.status(404).json({ msg: 'User not found' })
                 }
             })
             .catch(err => console.log(err))
@@ -110,19 +112,19 @@ router.route('/follow')
         User.findOneAndUpdate({
             _id: req.user.id
         }, {
-            $push: { following: req.body.userId }
-        }, 
-        {new: true})
-        .then(user => {
-            User.findOneAndUpdate({
-                _id: req.body.userId
-            }, {
-                $push: { followers: req.user.id }
-            }, { new: true })
-            .then(user => res.json({userId: req.body.userId}))
+                $push: { following: req.body.userId }
+            },
+            { new: true })
+            .then(user => {
+                User.findOneAndUpdate({
+                    _id: req.body.userId
+                }, {
+                        $push: { followers: req.user.id }
+                    }, { new: true })
+                    .then(user => res.json({ userId: req.body.userId }))
+                    .catch(err => console.log(err))
+            })
             .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err))
     })
 
 router.route('/unfollow')
@@ -131,18 +133,18 @@ router.route('/unfollow')
         User.findOneAndUpdate({
             _id: req.user.id
         }, {
-            $pull: { following: req.body.userId } 
-        }, { new: true})
-        .then( user => {
-        	User.findOneAndUpdate({
-                _id: req.body.userId
-            }, { 
-                $pull: { followers: req.user.id }
+                $pull: { following: req.body.userId }
             }, { new: true })
-            .then(user => res.json({ userId: req.body.userId }))
+            .then(user => {
+                User.findOneAndUpdate({
+                    _id: req.body.userId
+                }, {
+                        $pull: { followers: req.user.id }
+                    }, { new: true })
+                    .then(user => res.json({ userId: req.body.userId }))
+                    .catch(err => console.log(err))
+            })
             .catch(err => console.log(err))
-        })
-        .catch(err => console.log(err))
     })
 
 module.exports = router
