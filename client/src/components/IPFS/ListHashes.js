@@ -48,7 +48,7 @@ class ListHashes extends Component {
         window.open(`https://ipfs.infura.io/ipfs/${ipfsHash}`, "_blank")
     }
 
-    render() {
+    render() { 
         const { classes, hashList } = this.props
         console.log('hashList', hashList)
        
