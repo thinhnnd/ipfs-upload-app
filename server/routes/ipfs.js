@@ -29,7 +29,7 @@ router.route('/add')
                         return res.status(400).send('No files were uploaded.');
                 }
                 fileUpload = req.files.fileUpload
-                console.log('req.files >>>', fileUpload.data)
+                console.log(fileUpload.name)
                 ipfs.add(fileUpload.data, (err, results) => {
                         if(err) {
                           console.error(err)
@@ -43,20 +43,14 @@ router.route('/add')
                                         login: req.user.login
                                 },
                                 type: fileUpload.mimetype,
+                                name: fileUpload.name,
                                 ipfsHash: ipfsHash
                         })
                         newHashInfo.save()
                                 .then( hashInfo => res.json(hashInfo) )
                                 .catch(err => console.log(err))
                       });
-                // uploadPath = __dirname + '/uploads/' + fileUpload.name;
-                // console.log(uploadPath);
-                // let sampleFile = req.files.sampleFile;
-                // fileUpload.mv(uploadPath, function(err) {
-                //         if (err)
-                //           return res.status(500).send(err);
-                //         res.send('File uploaded!');
-                // });
+
         })
 
 module.exports = router

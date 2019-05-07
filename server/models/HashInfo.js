@@ -7,6 +7,10 @@ const hashInfoSchema = new Schema({
         type: Schema.Types.Object,
         required: true
     },
+    name: {
+        type: String,
+        required: false
+    },
     ipfsHash: {
         type: String,
         required: true

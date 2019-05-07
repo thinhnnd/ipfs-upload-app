@@ -26,6 +26,10 @@ const styles = theme => ({
         '&:hover': {
             cursor: 'pointer'
         }
+    },
+    overflowXAuto: {
+        width: 50,
+        overflowX: 'auto'
     }
 })
 
@@ -54,6 +58,7 @@ class ListHashes extends Component {
        
         const hashItems = hashList && hashList.map( (el, i) => <TableRow onClick={()=>this.handleClickLink(el.ipfsHash)} className={classes.trHover} hover key={el._id}  target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
                 <TableCell> {i + 1} </TableCell>
+                <TableCell className={classes.overflowXAuto} > {el.name} </TableCell>
                 <TableCell> {el.type} </TableCell>
                 <TableCell> {el.ipfsHash}  </TableCell>
                 <TableCell> {(new Date(el.createAt)).toLocaleString()} </TableCell>
@@ -65,6 +70,7 @@ class ListHashes extends Component {
                     <TableHead>
                         <TableRow>
                             <TableCell>STT</TableCell>
+                            <TableCell>Name</TableCell>
                             <TableCell align="right">Type</TableCell>
                             <TableCell align="right">Hash</TableCell>
                             <TableCell align="right">Date Created</TableCell>

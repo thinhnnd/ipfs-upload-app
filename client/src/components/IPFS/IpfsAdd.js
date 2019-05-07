@@ -5,7 +5,6 @@ import {addFile} from '../../actions/ipfsUploadActions'
 
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
-import Paper  from '@material-ui/core/Paper';
 
 class IpfsAdd extends Component {
 
@@ -43,6 +42,7 @@ class IpfsAdd extends Component {
         this.setState({
             file: files[0]
           });
+        console.log('name ', files[0].name)
 
     }
 
@@ -82,6 +82,7 @@ class IpfsAdd extends Component {
                     maxFileSize={5000000}
                     showAlerts={true}
                     onClose={this.handleClose.bind(this)}
+                    showFileNamesInPreview={true}
                 />
             </div>
 
