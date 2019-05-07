@@ -135,7 +135,7 @@ class Header extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static" style={{ backgroundColor: '#4B0082' }}>
                     <ToolBar className={classes.space}>
-                        <Link to="/" className={classes.logo}>Twitt</Link>
+                        <Link to="/" className={classes.logo}>IPFS Uploader</Link>
                         {
                             isAuthenticated ? authLinks : guestLinks
                         }

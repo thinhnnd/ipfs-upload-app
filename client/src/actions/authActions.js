@@ -29,12 +29,6 @@ export const registerUser = (userData, history) => dispatch => {
 export const getCurrentUser = () => dispatch => {
 	axios.get(`http://${host}/api/users`)
 		.then(res => dispatch(setCurrentUser(res.data)))
-		.catch(err => {
-			dispatch({
-				type: GET_ERRORS,
-				payload: err.response.data
-			})
-		})
 }
 
 export const setCurrentUser = (data) => {

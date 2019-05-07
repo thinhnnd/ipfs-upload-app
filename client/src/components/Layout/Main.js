@@ -22,7 +22,7 @@ function Main(props) {
         <div >
             <Header />
             <div className={classes.root}>
-                <Grid container justify="center" spacing={24}>
+                <Grid container justify="center">
                     <Grid item lg={10} xs={10} sm={10} style={{ marginTop: 30 }}>
 
                         {props.children}

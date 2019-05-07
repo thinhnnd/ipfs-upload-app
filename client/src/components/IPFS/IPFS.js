@@ -1,11 +1,21 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux' 
 
-import ListHashes from './ListHashes';
+import ListHashes from './ListHashes'
 
 import Paper from '@material-ui/core/Paper'
-import IpfsAdd from './IpfsAdd';
+import IpfsAdd from './IpfsAdd'
 import Login from '../Auth/Login'
+import { withStyles } from '@material-ui/core/styles'
+
+const styles = {
+	paper: {
+		padding: 10,
+    },
+    textCenter: {
+        textAlign: 'center'
+    }
+}
 
 class IPFS extends Component {
 
@@ -66,13 +76,13 @@ class IPFS extends Component {
 
     render() {
         console.log('fileUpload',this.state);
-        const { isAuthenticated } = this.props;
+        const { isAuthenticated, classes } = this.props;
 
         return (
             <div>
             
-            { isAuthenticated ? <Paper>
-                                    <h3 >IPFS Page</h3>
+            { isAuthenticated ? <Paper className={classes.paper} >
+                                    <h3 className={classes.textCenter} >IPFS Page</h3>
                                     <IpfsAdd />
                                     <ListHashes />
                                 </Paper> 
@@ -88,4 +98,4 @@ const mapStateToProps = (state) => ({
     isAuthenticated: state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps)(IPFS)
+export default connect(mapStateToProps)(withStyles(styles)(IPFS))
