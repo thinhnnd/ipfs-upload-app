@@ -25,3 +25,23 @@ a:hover {
 .wrapper {
   min-width: 1300px;
 }
+
+table#users {
+  border: 1px solid #dfe2e5;
+
+}
+
+#users tr{
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+
+}
+
+#user tr:nth-child(2n) {
+  background-color: #f6f8fa;
+}
+
+#users td, #user th {
+  border: 1px solid #dfe2e5;
+  padding: 6px 13px;
+}

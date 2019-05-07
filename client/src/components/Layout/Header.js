@@ -61,38 +61,42 @@ class Header extends React.Component {
         const open = Boolean(anchorEl)
 
         const guestLinks = (
-			<div>
-				<IconButton
-					aria-owns={ open ? 'menu-appbar': undefined }
-					aria-haspopup="true"
-					color="inherit"
-					onClick={this.handleMenu}
-				>
-					<MoreVert />
-				</IconButton>
-				<Menu
-					id="menu-appbar"
-					open={open}
-					anchorOrigin={{
-						vertical: 'top',
-						horizontal: 'right'
-					}}
-					transformOrigin={{
-						vertical: 'top',
-						horizontal: 'right'
-					}}
-					anchorEl={anchorEl}
-					onClose={this.handleClose}
-				>
-					<MenuItem onClick={this.handleClose}>
-						<Link to="/login">Login</Link>
-					</MenuItem>
-					<MenuItem onClick={this.handleClose}>
-						<Link to="/register">Register</Link>
-					</MenuItem>
-				</Menu>
-			</div>
-		)
+            <div>
+                <IconButton
+                    aria-owns={open ? 'menu-appbar' : undefined}
+                    aria-haspopup="true"
+                    color="inherit"
+                    onClick={this.handleMenu}
+                >
+                    <MoreVert />
+                </IconButton>
+                <Menu
+                    id="menu-appbar"
+                    open={open}
+                    anchorOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right'
+                    }}
+                    anchorEl={anchorEl}
+                    onClose={this.handleClose}
+                >
+
+                        <MenuItem component={Link} to="/login" onClick={this.handleClose}>
+                            Login
+                        </MenuItem>
+
+                        <MenuItem component={Link} to="/register" onClick={this.handleClose}>
+                        Register
+                        </MenuItem>
+
+
+                </Menu>
+            </div>
+        )
 
         const authLinks = (
             <div>
@@ -118,14 +122,11 @@ class Header extends React.Component {
                     open={open}
                     onClose={this.handleClose}
                 >
-                    <MenuItem onClick={this.handleClose}>
-                        <Link to={`/profile/`}>Profile</Link>
+                    <MenuItem component={Link} to={`/ipfs`} onClick={this.handleClose}>
+                       IPFS
                     </MenuItem>
-                    <MenuItem onClick={this.handleClose}>
-                        <Link to={`/ipfs/`}>IPFS</Link>
-                    </MenuItem>
-                    <MenuItem >
-                        <Link to="/#" onClick={this.handleLogout}>Logout</Link>
+                    <MenuItem component={Link} to={`#`} onClick={this.handleLogout} >
+                        Logout
                     </MenuItem>
                 </Menu>
             </div>

@@ -53,7 +53,7 @@ class ListHashes extends Component {
         console.log('hashList', hashList)
        
         const hashItems = hashList && hashList.map( (el, i) => <TableRow onClick={()=>this.handleClickLink(el.ipfsHash)} className={classes.trHover} hover key={el._id}  target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
-                <TableCell> {i} </TableCell>
+                <TableCell> {i + 1} </TableCell>
                 <TableCell> {el.type} </TableCell>
                 <TableCell> {el.ipfsHash}  </TableCell>
                 <TableCell> {(new Date(el.createAt)).toLocaleString()} </TableCell>

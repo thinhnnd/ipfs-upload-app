@@ -14,6 +14,7 @@ import IPFS from './components/IPFS/IPFS'
 
 import setAuthHeader from './utils/setAuthHeader'
 import { logoutUser, getCurrentUser } from './actions/authActions'
+import Usage from './components/Intro/Usage';
 
 if(localStorage.getItem('jwtToken')) {
   const currentTime = Date.now() / 1000
@@ -36,7 +37,7 @@ class App extends Component {
           <BrowserRouter>
             <Main>
               <Switch>
-                <Route exact path="/" component={Home} />
+                <Route exact path="/" component={Usage} />
                 <Route path="/login" component={Login} />
                 <Route path="/ipfs" component={IPFS} />
                 <Route path="/register" component={Register} />
