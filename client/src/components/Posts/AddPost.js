@@ -3,12 +3,12 @@ import React, { Component } from 'react'
 import Paper from '@material-ui/core/Paper'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
-import {withStyles} from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import { addPost } from '../../actions/postActions'
 
 const styles = {
-    paper : {
+    paper: {
         padding: 8
     },
     textField: {
@@ -47,31 +47,33 @@ class AddPost extends Component {
 
         const postData = {
             text: this.state.text
-        }  
+        }
 
-        this.props.addPost(postData)      
-        this.setState({ text: '' })    
-        console.log(this.state.text)  
+        this.props.addPost(postData)
+        this.setState({ text: '' })
+        console.log(this.state.text)
     }
+
+   
 
     render() {
         const { classes } = this.props
-        return (
-            <Paper className = { classes.paper }>
-                <TextField 
-                    className = { classes.textField }
+                        return (
+            <Paper className={classes.paper}>
+                <TextField
+                    className={classes.textField}
                     multiline
                     rowsMax="4"
-                    label = "What's new?"
-                    placeholder = "Write something to the world"
+                    label="What's new?"
+                    placeholder="Write something to the world"
                     margin="normal"
-                    value = { this.state.text }
-                    onChange = {this.handleChange}
+                    value={this.state.text}
+                    onChange={this.handleChange}
                 />
-                <Button 
-                    className = { classes.button } 
+                <Button
+                    className={classes.button}
                     variant="outlined"
-                    onClick = {this.handleSubmit}
+                    onClick={this.handleSubmit}
                 >
                     Send
                 </Button>
@@ -81,4 +83,4 @@ class AddPost extends Component {
 }
 
 
-export default connect(null, { addPost }) (withStyles(styles)(AddPost))
+export default connect(null, { addPost })(withStyles(styles)(AddPost))

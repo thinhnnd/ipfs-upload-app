@@ -6,13 +6,17 @@ import {addFile} from '../../actions/ipfsUploadActions'
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 
+import fileToArrayBuffer from 'file-to-array-buffer'
+import { builtinModules } from 'module';
+
 class IpfsAdd extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             open: false,
-            file: null
+            file: null,
+            buffer: null,
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -26,10 +30,8 @@ class IpfsAdd extends Component {
     }
 
     handleSave(files) {
-        //Saving files to state for further use and closing Modal.
-     
-
-        console.log('sended')
+        //Saving files to state for further use and closing Modal  
+      console.log('sended')
     }
     handleOpen() {
         this.setState({
@@ -38,26 +40,49 @@ class IpfsAdd extends Component {
     }
 
     handleChange (files) {
-        console.log(files)
+        let file = files[0]
+        
         this.setState({
-            file: files[0]
-          });
-        console.log('name ', files[0].name)
+            file: file
+        })
+
+        let reader = new window.FileReader()
+        reader.readAsArrayBuffer(file)
+        reader.onloadend = () => this.convertToBuffer(reader)
+  
 
     }
 
+
+    // captureFile =(event) => {
+    //     event.stopPropagation()
+    //     event.preventDefault()
+    //     const file = event.target.files[0]
+    //     let reader = new window.FileReader()
+    //     reader.readAsArrayBuffer(file)
+    //     reader.onloadend = () => this.convertToBuffer(reader)
+    //   };
+//Convert the file to buffer to store on IPFS
+        convertToBuffer = async(reader) => {
+      //file is converted to a buffer for upload to IPFS
+        const buffer = await Buffer.from(reader.result);
+      //set this buffer-using es6 syntax
+      console.log(buffer)
+      this.setState({
+        buffer: buffer
+      });
+    };
+
     handleSubmit() {
         // e.preventDefault()
-        let formData = new FormData()
-        formData.append('ref', 'uploadForm')
-        formData.append('fileUpload',this.state.file);
+        // let formData = new FormData()
+        // formData.append('ref', 'uploadForm')
+        // formData.append('fileUpload',this.state.file);
         // formData.append('encType', 'multipart/form-data')
-        const config = {
-            headers: {
-                'content-type': 'multipart/form-data'
-            }
-        }
-        this.props.addFile(formData, config)
+
+        const { file, buffer } = this.state;
+        this.props.addFile(buffer, file)
+        // console.log('file ', file);
         this.setState({
             file: null,
             open: false
@@ -65,8 +90,6 @@ class IpfsAdd extends Component {
     }
 
     render() {
-        console.log('fileUpload',this.state);
-
         return (
             <div>
                 <Button variant="contained"  color='secondary' onClick={this.handleOpen.bind(this)}>

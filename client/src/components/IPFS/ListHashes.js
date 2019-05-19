@@ -45,16 +45,15 @@ class ListHashes extends Component {
 
     componentDidMount() {
         this.props.getAllHashes()
-       console.log(this.props)
     }
 
     handleClickLink (ipfsHash) {
-        window.open(`https://ipfs.infura.io/ipfs/${ipfsHash}`, "_blank")
+        //window.open(`https://ipfs.infura.io/ipfs/${ipfsHash}`, "_blank")
+        window.open(`https://ipfs.io/ipfs/${ipfsHash}`, "_blank")
     }
 
     render() { 
         const { classes, hashList } = this.props
-        console.log('hashList', hashList)
        
         const hashItems = hashList && hashList.map( (el, i) => <TableRow onClick={()=>this.handleClickLink(el.ipfsHash)} className={classes.trHover} hover key={el._id}  target="_blank" href={`https://ipfs.infura.io/ipfs/${el.ipfsHash}`} >
                 <TableCell> {i + 1} </TableCell>
