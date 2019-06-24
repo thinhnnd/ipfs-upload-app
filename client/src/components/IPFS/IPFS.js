@@ -7,7 +7,6 @@ import Paper from '@material-ui/core/Paper'
 import IpfsAdd from './IpfsAdd'
 import Login from '../Auth/Login'
 import { withStyles } from '@material-ui/core/styles'
-import IPFS_JS from 'ipfs'
 
 
 const styles = {

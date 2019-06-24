@@ -6,7 +6,6 @@ import {addFile} from '../../actions/ipfsUploadActions'
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 
-import fileToArrayBuffer from 'file-to-array-buffer'
 import { builtinModules } from 'module';
 
 class IpfsAdd extends Component {
